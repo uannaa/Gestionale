@@ -11,14 +11,14 @@ import java.util.Date;
  *
  * @author paolo
  */
-public class events {
+public class Event {
     
     private String nome_evento;
     private String descrizione;
     private Date data;
     private Categoria categoria;
     
-    public events(String nome, String descrizione, String data, String ora, Categoria cat) {
+    public Event(String nome, String descrizione, String data, String ora, Categoria cat) {
         this.nome_evento = nome;
         this.descrizione = descrizione;
         this.data = conversione(data, ora);
