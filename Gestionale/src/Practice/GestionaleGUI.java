@@ -1,109 +1,126 @@
-package Practice;
-
-import Practice.FrameTry;
-import Practice.FrameTry2;
 import Practice.TryPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class GestionaleGUI {
+public class GestionaleGUI extends JFrame {
+    private JLabel titoloLabel;
+    private JButton gestisciButton;
+    private JComboBox<String> aggiungiComboBox;
+    private JScrollPane containerScrollPane;
+    private JPanel containerPanel;
+
+    public GestionaleGUI() {
+        setTitle("Gestionale – Dark Modern UI");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(950, 700);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        // Palette colori moderni
+        Color bgColor = new Color(24, 24, 27);
+        Color topBarColor = new Color(36, 36, 42);
+        Color textColor = new Color(235, 235, 245);
+        Color accentColor = new Color(98, 160, 255);
+        Color comboBgColor = new Color(45, 45, 52);
+
+        Font titleFont = new Font("Segoe UI", Font.BOLD, 22);
+        Font baseFont = new Font("Segoe UI", Font.PLAIN, 15);
+
+        // Top panel
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        topPanel.setBackground(topBarColor);
+        add(topPanel, BorderLayout.NORTH);
+
+        // Titolo
+        titoloLabel = new JLabel("Gestionale");
+        titoloLabel.setFont(titleFont);
+        titoloLabel.setForeground(textColor);
+        topPanel.add(titoloLabel, BorderLayout.WEST);
+
+        // Bottoni destra
+        JPanel rightTopPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
+        rightTopPanel.setBackground(topBarColor);
+
+        // Bottone gestisci
+        gestisciButton = creaBottone("Gestisci", accentColor, textColor);
+        rightTopPanel.add(gestisciButton);
+
+        // ComboBox stile moderno
+        String[] opzioni = {"Aggiungi evento", "Aggiungi categoria"};
+        aggiungiComboBox = new JComboBox<>(opzioni);
+        aggiungiComboBox.setFont(baseFont);
+        aggiungiComboBox.setForeground(textColor);
+        aggiungiComboBox.setBackground(comboBgColor);
+        aggiungiComboBox.setFocusable(false);
+        aggiungiComboBox.setPreferredSize(new Dimension(170, 34));
+        aggiungiComboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        aggiungiComboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setBackground(isSelected ? accentColor.darker() : comboBgColor);
+                lbl.setForeground(textColor);
+                lbl.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                return lbl;
+            }
+        });
+
+        rightTopPanel.add(aggiungiComboBox);
+        topPanel.add(rightTopPanel, BorderLayout.EAST);
+
+        // Pannello container scrollabile
+        containerPanel = new JPanel();
+        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+        containerPanel.setBackground(bgColor);
+
+        containerScrollPane = new JScrollPane(containerPanel);
+        containerScrollPane.setBorder(null);
+        containerScrollPane.getViewport().setBackground(bgColor);
+        containerScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        containerScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        add(containerScrollPane, BorderLayout.CENTER);
+        getContentPane().setBackground(bgColor);
+        setVisible(true);
+    }
+
+    private JButton creaBottone(String text, Color bg, Color fg) {
+        JButton btn = new JButton(text);
+        btn.setFocusPainted(false);
+        btn.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        btn.setBackground(bg);
+        btn.setForeground(fg);
+        btn.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setOpaque(true);
+        btn.setBorderPainted(false);
+
+        // Effetto hover
+        btn.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                btn.setBackground(bg.brighter());
+            }
+            public void mouseExited(MouseEvent e) {
+                btn.setBackground(bg);
+            }
+        });
+        return btn;
+    }
+
+    public void aggiungiTryPanel(TryPanel panel) {
+        panel.setMaximumSize(new Dimension(666, 150));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        containerPanel.add(Box.createVerticalStrut(12));
+        containerPanel.add(panel);
+        containerPanel.revalidate();
+        containerPanel.repaint();
+    }   
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Gestionale");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(900, 600);
-            frame.setLocationRelativeTo(null);
-            frame.setLayout(new BorderLayout());
-            frame.getContentPane().setBackground(Color.decode("#f4f4f4"));
-
-            // Pannello superiore
-            JPanel topPanel = new JPanel(new BorderLayout());
-            topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
-            topPanel.setBackground(Color.decode("#ffffff"));
-
-            // Label "Gestionale"
-            JLabel titleLabel = new JLabel("Gestionale");
-            titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-            titleLabel.setForeground(Color.decode("#333333"));
-            topPanel.add(titleLabel, BorderLayout.WEST);
-
-            // Pannello per i bottoni/combo
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setBackground(Color.decode("#ffffff"));
-
-            // Bottone "Gestisci"
-            JButton gestisciButton = new JButton("Gestisci");
-            styleButton(gestisciButton);
-            buttonPanel.add(gestisciButton);
-            buttonPanel.add(Box.createHorizontalStrut(10));
-
-            // ComboBox "Aggiungi"
-            String[] opzioniAggiunta = {"Aggiungi evento", "Aggiungi categoria"};
-            JComboBox<String> aggiungiComboBox = new JComboBox<>(opzioniAggiunta);
-            styleComboBox(aggiungiComboBox);
-            buttonPanel.add(aggiungiComboBox);
-
-            topPanel.add(buttonPanel, BorderLayout.EAST);
-
-            // Pannello contenente i TryPanel
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-            contentPanel.setBackground(Color.decode("#f4f4f4"));
-
-//            // Esempio: aggiunta di alcuni TryPanel
-//            for (int i = 0; i < 5; i++) {
-//                TryPanel panel = new TryPanel();
-//                panel.setMaximumSize(new Dimension(666, 150));
-//                panel.setPreferredSize(new Dimension(666, 150));
-//                panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//                contentPanel.add(panel);
-//                contentPanel.add(Box.createVerticalStrut(15));
-//            }
-
-            // ScrollPane centrale
-            JScrollPane container = new JScrollPane(contentPanel);
-            container.setBorder(null);
-            container.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            container.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            container.getViewport().setBackground(Color.decode("#f4f4f4"));
-
-            // Azione ComboBox
-            aggiungiComboBox.addActionListener(e -> {
-                String selezione = (String) aggiungiComboBox.getSelectedItem();
-                if (selezione.equals("Aggiungi evento")) {
-                    System.out.println("Evento da aggiungere");
-                    Frame f = new FrameTry();
-                    f.setVisible(true);
-                } else if (selezione.equals("Aggiungi categoria")) {
-                    System.out.println("Categoria da aggiungere");
-                    Frame f = new FrameTry2();
-                    f.setVisible(true);
-                }
-            });
-
-            // Aggiunta componenti
-            frame.add(topPanel, BorderLayout.NORTH);
-            frame.add(container, BorderLayout.CENTER);
-
-            frame.setVisible(true);
-        });
-    }
-
-    private static void styleButton(JButton button) {
-        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setFocusPainted(false);
-        button.setBackground(new Color(66, 133, 244));
-        button.setForeground(Color.WHITE);
-        button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
-
-    private static void styleComboBox(JComboBox<String> comboBox) {
-        comboBox.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        comboBox.setBackground(Color.WHITE);
-        comboBox.setForeground(Color.DARK_GRAY);
-        comboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        SwingUtilities.invokeLater(() -> new GestionaleGUI());
     }
 }
