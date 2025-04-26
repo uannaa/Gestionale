@@ -264,12 +264,11 @@ public class EventFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean isBisestile() {
+    private boolean isBisestile(String anno) {
 
-        boolean isBisestile = false;    
-
-        String annonumS = (String) yy.getSelectedItem();
-        int annonum = Integer.parseInt(annonumS);
+        boolean isBisestile = false;
+        
+        int annonum = Integer.parseInt(anno);
  
         if ((annonum - 1904) % 4 == 0)  {
 
@@ -295,7 +294,7 @@ public class EventFrame extends javax.swing.JFrame {
                 int mese = Integer.parseInt(selectedMonth);
                 int oldDay = Integer.parseInt(selectedDay);
                 
-                boolean bisestile = isBisestile();
+                boolean bisestile = isBisestile((String) yy.getSelectedItem());
                 int giorniMax;
 
                 if (mese == 2) {
@@ -319,18 +318,38 @@ public class EventFrame extends javax.swing.JFrame {
 
 
         
-        yy.addActionListener(new ActionListener(){
+                yy.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                String selected_month = (String) mm.getSelectedItem();
-                if (selected_month.equals("2") && isBisestile()) {
-                    gg.removeAllItems();
-                    load(29, gg, false);
-                } else if (selected_month.equals("2") && !isBisestile()){
-                    gg.removeAllItems();
-                    load(28, gg, false); 
+                String selectedYear = (String) yy.getSelectedItem();
+                String selectedMonth = (String) mm.getSelectedItem();
+                String selectedDay = (String) gg.getSelectedItem();
+                int giornimax = 0;
+                boolean t = false;
+                if (selectedMonth.equals("2") && isBisestile(selectedYear)) {
+                    giornimax = 29;
+                    t = true;
+                } else if (selectedMonth.equals("2") && !isBisestile(selectedYear)){
+                    giornimax = 28;
+                    t = true;
                 }
+                
+                if (t) {
+                    gg.removeAllItems();
+                    load(giornimax, gg, false);
+                }
+                
+               int oldDay = Integer.parseInt(selectedDay); 
+                if (oldDay <= giornimax) { 
+                    gg.setSelectedItem(String.valueOf(oldDay)); 
+                } else { 
+                        gg.setSelectedItem(String.valueOf(giornimax)); 
+                } 
+                 
             }
         });
+
+
+
 
     }
     
