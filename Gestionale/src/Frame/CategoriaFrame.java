@@ -4,6 +4,7 @@
  */
 package Frame;
 
+import Class.UIUtils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
      */
     public CategoriaFrame() {
         initComponents();
+        UIUtils.styleButton(jButton1);
     }
 
     /**
@@ -50,21 +52,22 @@ public class CategoriaFrame extends javax.swing.JFrame {
         setTitle("Crea categoria");
         setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(34, 40, 49));
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
         jLabel1.setText("Nome categoria :");
 
         NEvento.setForeground(new java.awt.Color(0, 0, 0));
         NEvento.setToolTipText("Inserisci il nome della categoria");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(238, 238, 238));
         jLabel6.setText("CREA CATEGORIA");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setBackground(new java.awt.Color(238, 238, 238));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setForeground(new java.awt.Color(34, 40, 49));
         jButton1.setText("CREA CATEGORIA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +75,8 @@ public class CategoriaFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
         jLabel2.setText("Colore (HEX) : ");
 
         jTextField1.setColumns(2);
@@ -92,7 +96,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(NEvento)
                     .addComponent(jTextField1))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +113,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,6 +133,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //TODO: FARE PRIMA TUTTI I CONTROLLI SU COLORE
+        //      FARE ANCHE CONTROLLO SE NON INSERISC NULLA
         
         String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
         String pathFile1 = path2 + File.separator + "Categorie.csv";
@@ -142,6 +147,9 @@ public class CategoriaFrame extends javax.swing.JFrame {
         }
         
         System.out.println("Categoria creata!");
+        
+        dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
