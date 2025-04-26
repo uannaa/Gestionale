@@ -190,7 +190,7 @@ public class main extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
             }
-
+            //GAY
             if (!file2.exists()) {
                 try {
                     file2.createNewFile();
