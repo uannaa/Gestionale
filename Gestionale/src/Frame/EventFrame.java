@@ -4,6 +4,14 @@
  */
 package Frame;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,10 +24,16 @@ public class EventFrame extends javax.swing.JFrame {
     /**
      * Creates new form EventFrame
      */
-    public EventFrame() {
+    public EventFrame() throws FileNotFoundException {
         
 
         initComponents();
+        load(31, gg, false);
+        load(12, mm, false);
+        load(0, yy, true);
+        load(12, jComboBox1, false);
+        load(59, jComboBox2, false);
+        loadCategorie(cat);
         
     }
 
@@ -63,6 +77,8 @@ public class EventFrame extends javax.swing.JFrame {
         jLabel1.setText("Nome :");
 
         NEvento.setForeground(new java.awt.Color(0, 0, 0));
+        NEvento.setToolTipText("Inserisci il nome dell'evento");
+        NEvento.setActionCommand("<Not Set>");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Descrizione :");
@@ -71,18 +87,19 @@ public class EventFrame extends javax.swing.JFrame {
         jLabel4.setText("Data :");
 
         gg.setForeground(new java.awt.Color(255, 255, 255));
-        gg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
         mm.setForeground(new java.awt.Color(255, 255, 255));
-        mm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        mm.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        mm.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        mm.setName(""); // NOI18N
 
         yy.setForeground(new java.awt.Color(255, 255, 255));
-        yy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2023", "2024", "2025" }));
 
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         Descriz.setColumns(20);
         Descriz.setRows(5);
+        Descriz.setToolTipText("Inserisci una descrizione all'evento");
         jScrollPane1.setViewportView(Descriz);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -90,7 +107,6 @@ public class EventFrame extends javax.swing.JFrame {
         jLabel3.setText("CREA EVENTO");
 
         cat.setForeground(new java.awt.Color(0, 0, 0));
-        cat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "sport" }));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Categoria :");
@@ -99,14 +115,21 @@ public class EventFrame extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CREA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setBackground(new java.awt.Color(0, 102, 102));
         jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton1.setText("P.M.");
+        jToggleButton1.setToolTipText("Clicca su questo tasto se l'evento e' di pomeriggio");
 
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
 
         jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,6 +212,10 @@ public class EventFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Creare tutto l'evento.
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -219,9 +246,54 @@ public class EventFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EventFrame().setVisible(true);
+                try {
+                    new EventFrame().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+    }
+    
+    private void load(int num, JComboBox combobox, boolean b) {
+        
+        if (!b) {
+            for (int i = 0; i < num; i++) {
+                String nm = String.valueOf(i+1);
+                combobox.addItem(nm);
+            }
+            return;
+        }
+        
+        LocalDate d = LocalDate.now();
+        String dS = String.valueOf(d);
+        String year = "";
+        for (int i = 0; i < 4; i++) {
+            year += dS.charAt(i);
+        }
+        int yearint = Integer.valueOf(year);
+        for (int i = yearint; i < (yearint + 6); i++) {
+            String nm = String.valueOf(i);
+            combobox.addItem(nm);
+        }
+        
+    }
+    private void loadCategorie(JComboBox c) throws FileNotFoundException {
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
+        String pathFile1 = path2 + File.separator + "Categorie.csv";
+        
+        File file = new File(pathFile1);
+        try (Scanner scanner = new Scanner(file)) {
+            
+            while (scanner.hasNextLine()) {
+                String linea = scanner.nextLine();
+                String categoria[] = linea.split(",");
+                c.addItem(categoria[0]);
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,12 @@
  */
 package Frame;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author paolo
@@ -47,9 +53,10 @@ public class CategoriaFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nome  categoria :");
+        jLabel1.setText("Nome categoria :");
 
         NEvento.setForeground(new java.awt.Color(0, 0, 0));
+        NEvento.setToolTipText("Inserisci il nome della categoria");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -59,11 +66,18 @@ public class CategoriaFrame extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CREA CATEGORIA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Colore : ");
+        jLabel2.setText("Colore (HEX) : ");
 
+        jTextField1.setColumns(2);
         jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        jTextField1.setToolTipText("Inserisci il colore in codifica HEX");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,6 +125,24 @@ public class CategoriaFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        //TODO: FARE PRIMA TUTTI I CONTROLLI SU COLORE
+        
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
+        String pathFile1 = path2 + File.separator + "Categorie.csv";
+        
+        
+        try (FileWriter file = new FileWriter(pathFile1, true)) {
+            String liena = NEvento.getText() + " , " + jTextField1.getText() + "\n";
+            file.write(liena);
+        } catch (IOException ex) {
+            Logger.getLogger(CategoriaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("Categoria creata!");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

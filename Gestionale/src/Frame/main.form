@@ -65,8 +65,8 @@
                   <EmptySpace pref="365" max="32767" attributes="0"/>
                   <Component id="bot" min="-2" pref="95" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="add" min="-2" pref="130" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <Component id="add" min="-2" pref="129" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
               <Component id="scroll" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -78,9 +78,9 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bot" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="add" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Component id="scroll" min="-2" pref="432" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -122,10 +122,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value=""/>
-                <StringItem index="1" value="Add categoria"/>
-                <StringItem index="2" value="Add evento"/>
+              <StringArray count="2">
+                <StringItem index="0" value="Add categoria"/>
+                <StringItem index="1" value="Add evento"/>
               </StringArray>
             </Property>
           </Properties>

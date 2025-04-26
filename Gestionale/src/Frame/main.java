@@ -7,6 +7,11 @@ package Frame;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -31,11 +36,7 @@ public class main extends javax.swing.JFrame {
     public main(){
         
         initComponents();
-        contenitore.setLayout(new BoxLayout(contenitore, BoxLayout.Y_AXIS));
-        scroll.setViewportView(contenitore);
-        contenitore.setBackground(new Color(204,204,204));
-        styleButton(bot);
-        styleComboBox(add);
+        init();
     }
     
     /**
@@ -73,7 +74,7 @@ public class main extends javax.swing.JFrame {
 
         add.setBackground(new java.awt.Color(0, 102, 102));
         add.setForeground(new java.awt.Color(255, 255, 255));
-        add.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Add categoria", "Add evento" }));
+        add.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Add categoria", "Add evento" }));
 
         bot.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bot.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,8 +90,8 @@ public class main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
                 .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addComponent(scroll)
         );
         jPanel1Layout.setVerticalGroup(
@@ -100,8 +101,8 @@ public class main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                    .addComponent(add))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -118,25 +119,75 @@ public class main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private static void styleButton(JButton button) {
-        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setFocusPainted(false);
-        button.setBackground(new Color(102, 102, 102));
-        button.setForeground(Color.WHITE);
-        button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
     
-    private static void styleComboBox(JComboBox<String> comboBox) {
-        comboBox.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        comboBox.setBackground(new Color(102, 102, 102));
-        comboBox.setForeground(Color.DARK_GRAY);
-        comboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
     /**
      * @param args the command line arguments
      */
+    
+    public void init() {
+        
+        //Controllare se la cartella esiste con tutti i file all interno, se non esiste prima crea la cartella e poi crea tutti i files
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
+        System.out.println(path2);
+        String pathFile1 = path2 + File.separator + "Categorie.csv";
+        String pathFile2 = path2 + File.separator + "Eventi.csv";
+        File file = new File(pathFile1);
+        File file2 = new File(pathFile2);
+
+        Path path = Paths.get(path2);
+        if (Files.exists(path)) {
+            System.out.println("La cartella esiste già.");
+                            
+            if (!file.exists()) {
+                try{
+                    file.createNewFile();
+                    System.out.println("La cartella esiste gia pero il file categorie e stato appena creato!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (!file2.exists()) {
+                try {
+                    file2.createNewFile();
+                    System.out.println("La cartella esiste gia pero il file eveneti e stato appena creato!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        } else {
+            try {
+                Files.createDirectories(path);
+                System.out.println("Cartella creata con successo!");
+                
+
+                
+                if (!file.exists()) {
+                    try{
+                        file.createNewFile();
+                        System.out.println("File categorie creato!");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                
+                if (!file2.exists()) {
+                    try {
+                        file2.createNewFile();
+                        System.out.println("File eventi creato!");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
