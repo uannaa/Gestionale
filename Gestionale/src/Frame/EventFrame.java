@@ -7,6 +7,8 @@ package Frame;
 import Class.UIUtils;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class EventFrame extends javax.swing.JFrame {
         
         
         initComponents();
+        jLabel7.setVisible(false);
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
@@ -48,6 +51,7 @@ public class EventFrame extends javax.swing.JFrame {
         gg.setPreferredSize(new Dimension(70, 36));
         mm.setPreferredSize(new Dimension(70, 36));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        dateFormat();
     }
 
     /**
@@ -77,9 +81,13 @@ public class EventFrame extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         mm = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
+        setMaximumSize(new java.awt.Dimension(436, 540));
+        setMinimumSize(new java.awt.Dimension(436, 540));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -146,6 +154,10 @@ public class EventFrame extends javax.swing.JFrame {
         jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00" }));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText("DEVI COMPLETARE TUTTI I CAMPI CORRETTAMENTE!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -174,11 +186,16 @@ public class EventFrame extends javax.swing.JFrame {
                     .addComponent(NEvento, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cat, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96))
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(38, 38, 38))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,9 +228,11 @@ public class EventFrame extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -232,7 +251,60 @@ public class EventFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Creare tutto l'evento.
+        if (NEvento.getText().equals("")) {
+            jLabel7.setVisible(true);
+            return;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private static boolean isBisestile(String data) {
+
+        boolean isBisestile = false;    
+
+        String selected = (String) mm.getSelectedItem();
+ 
+        if ((annonum - 1904) % 4 == 0)  {
+
+            isBisestile = true;
+
+        } else {
+
+            isBisestile = false;
+
+        }
+
+        return isBisestile;
+
+    }
+    
+    private void dateFormat(){
+
+        mm.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selected = (String) mm.getSelectedItem();
+
+                if (selected.equals("1") || selected.equals("3") || selected.equals("5") || selected.equals("7") || selected.equals("8") || selected.equals("10") || selected.equals("12")){
+                    gg.removeAllItems();
+                    load(31, gg, false);
+                } else if (selected.equals("2") && ) {
+                    gg.removeAllItems();
+                    load(29, gg, false);
+                } else {
+                    gg.removeAllItems();
+                    load(30, gg, false);
+                }
+            }
+        });
+        
+//        yy.addActionListener(new ActionListener(){
+//            public void actionPerformed(ActionEvent e) {
+//                String selected = (String) yy.getSelectedItem();
+//                
+//            }
+//        });
+
+    }
+    
     public int i = 1;
     private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
            
@@ -283,9 +355,11 @@ public class EventFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-
-       
+                try {
+                    new EventFrame().setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -346,6 +420,7 @@ public class EventFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
