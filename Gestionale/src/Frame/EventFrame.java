@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -33,7 +34,6 @@ public class EventFrame extends javax.swing.JFrame {
      */
     public EventFrame() throws FileNotFoundException {
         
-        
         initComponents();
         jLabel7.setVisible(false);
         try {
@@ -51,7 +51,8 @@ public class EventFrame extends javax.swing.JFrame {
         gg.setPreferredSize(new Dimension(70, 36));
         mm.setPreferredSize(new Dimension(70, 36));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        dateFormat();
+        dateCheck();
+        
     }
 
     /**
@@ -255,13 +256,20 @@ public class EventFrame extends javax.swing.JFrame {
             jLabel7.setVisible(true);
             return;
         }
+        
+        try {
+            saveEvent();
+        } catch (IOException ex) {
+            Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private static boolean isBisestile(String data) {
+    private boolean isBisestile() {
 
         boolean isBisestile = false;    
 
-        String selected = (String) mm.getSelectedItem();
+        String annonumS = (String) yy.getSelectedItem();
+        int annonum = Integer.parseInt(annonumS);
  
         if ((annonum - 1904) % 4 == 0)  {
 
@@ -277,32 +285,83 @@ public class EventFrame extends javax.swing.JFrame {
 
     }
     
-    private void dateFormat(){
+    private void dateCheck(){
 
         mm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String selected = (String) mm.getSelectedItem();
+                String selectedMonth = (String) mm.getSelectedItem();
+                String selectedDay = (String) gg.getSelectedItem();
 
-                if (selected.equals("1") || selected.equals("3") || selected.equals("5") || selected.equals("7") || selected.equals("8") || selected.equals("10") || selected.equals("12")){
-                    gg.removeAllItems();
-                    load(31, gg, false);
-                } else if (selected.equals("2") && ) {
-                    gg.removeAllItems();
-                    load(29, gg, false);
+                int mese = Integer.parseInt(selectedMonth);
+                int oldDay = Integer.parseInt(selectedDay);
+                
+                boolean bisestile = isBisestile();
+                int giorniMax;
+
+                if (mese == 2) {
+                    giorniMax = bisestile ? 29 : 28;
+                } else if (mese == 4 || mese == 6 || mese == 9 || mese == 11) {
+                    giorniMax = 30;
                 } else {
-                    gg.removeAllItems();
-                    load(30, gg, false);
+                    giorniMax = 31;
+                }
+                
+                gg.removeAllItems();
+                load(giorniMax, gg, false);
+
+                if (oldDay <= giorniMax) {
+                    gg.setSelectedItem(String.valueOf(oldDay));
+                } else {
+                    gg.setSelectedItem(String.valueOf(giorniMax));
                 }
             }
         });
-        
-//        yy.addActionListener(new ActionListener(){
-//            public void actionPerformed(ActionEvent e) {
-//                String selected = (String) yy.getSelectedItem();
-//                
-//            }
-//        });
 
+
+        
+        yy.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                String selected_month = (String) mm.getSelectedItem();
+                if (selected_month.equals("2") && isBisestile()) {
+                    gg.removeAllItems();
+                    load(29, gg, false);
+                } else if (selected_month.equals("2") && !isBisestile()){
+                    gg.removeAllItems();
+                    load(28, gg, false); 
+                }
+            }
+        });
+
+    }
+    
+    private void saveEvent() throws IOException {
+        
+        String nome = NEvento.getText();
+        String descrizione = "$#=" + Descriz.getText() + "$#=";
+        String data = (String) gg.getSelectedItem() + "-" + (String) mm.getSelectedItem() + "-" + (String) yy.getSelectedItem();
+        String ora = (String) jComboBox1.getSelectedItem() + ":" + (String) jComboBox2.getSelectedItem();
+        String categoria = (String) cat.getSelectedItem();
+        
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
+        String pathFile2 = path2 + File.separator + "Eventi.csv";
+       
+        
+        if (jToggleButton1.isSelected()) {
+            Integer orario = Integer.parseInt((String) jComboBox1.getSelectedItem());
+            orario += 12;
+            String orax[] = ora.split(":");
+            ora = String.valueOf(orario) + ":" + orax[1];
+        }
+        
+        try (FileWriter writer  = new FileWriter(pathFile2, true)) {
+            writer.write(nome + "," + descrizione + "," + data + "," + ora + "," + categoria + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        dispose();
+        System.out.println("Evento creato!");
+        
     }
     
     public int i = 1;
@@ -370,6 +429,9 @@ public class EventFrame extends javax.swing.JFrame {
         if (!b) {
             for (int i = 0; i < num; i++) {
                 String nm = String.valueOf(i+1);
+                if ((i+1) < 10) {
+                    nm = "0" + nm;
+                }
                 combobox.addItem(nm);
             }
             return;
