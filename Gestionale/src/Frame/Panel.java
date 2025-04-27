@@ -5,6 +5,11 @@
 package Frame;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 
 /**
  *
@@ -22,11 +27,13 @@ public class Panel extends javax.swing.JPanel {
         descrizione.setText(d);
         data.setText(dat);
         ora.setText(o);
-        categoria.setText(ca);
-        this.setBackground(new Color(Color.decode(color).getRed(), Color.decode(color).getGreen(), Color.decode(color).getBlue(), 128)
-);
-        
+        categoria.setText(ca); 
+        this.setBackground(new Color(Color.decode(color).getRed(), Color.decode(color).getGreen(), Color.decode(color).getBlue(), 128));
+        this.setBorder(new javax.swing.border.LineBorder(Color.BLACK, 1, true));
+        this.setBorder(new RoundedBorder(30));  
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -117,15 +124,15 @@ public class Panel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(nome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(data))
