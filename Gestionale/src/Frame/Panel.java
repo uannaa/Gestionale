@@ -67,6 +67,7 @@ public class Panel extends javax.swing.JPanel {
         descrizione.setColumns(20);
         descrizione.setLineWrap(true);
         descrizione.setRows(5);
+        descrizione.setAutoscrolls(false);
         jScrollPane1.setViewportView(descrizione);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

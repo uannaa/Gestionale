@@ -58,7 +58,8 @@ public class main extends javax.swing.JFrame {
         openTab();
         contenitore.setLayout(new BoxLayout(contenitore, BoxLayout.Y_AXIS));
         scroll.setViewportView(contenitore);
-
+        contenitore.removeAll();
+        addPanel();
     }
     
     /**
@@ -118,6 +119,11 @@ public class main extends javax.swing.JFrame {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -183,6 +189,10 @@ public class main extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     
    
     
@@ -302,9 +312,10 @@ public class main extends javax.swing.JFrame {
     }
     
     public void addPanel() {
-        
+        String path1 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
         String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Eventi.csv";
         File file = new File(path2);
+        File file2 = new File(path1);
         
         try (Scanner scanner = new Scanner(file)) {
             
@@ -328,9 +339,28 @@ public class main extends javax.swing.JFrame {
                     String categoria = splitted2[4];
 
                     String colore = "#000000";
+                    
+                    try (Scanner scan = new Scanner(file2)) {
+                        
+                        while (scan.hasNextLine()) {
+                            String linea = scan.nextLine();
+                            String sp[] = linea.split(",");
+                            System.out.println("Categoria: " + sp[0]);
+                            System.out.println("Colore: " + sp[1]);
 
-                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore)) ;
+                            if (categoria.trim().equalsIgnoreCase(sp[0].trim())) {
+                                colore = sp[1].trim();
+                            }
+                        }
+ 
+                        
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     contenitore.add(Box.createRigidArea(new Dimension(0, 10)));
+                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore)) ;
+                    
                     System.out.println(stringa);
                                        
                 }else{
@@ -338,10 +368,9 @@ public class main extends javax.swing.JFrame {
                     break;
                     
                 }
-            }
-            
-            
-            
+            }            
+  
+
         } catch (IOException e) {
             e.printStackTrace();
         }
