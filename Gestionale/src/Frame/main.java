@@ -52,10 +52,13 @@ public class main extends javax.swing.JFrame {
      */
     public main(){
         
-        initComponents();
+        initComponents(); 
         init();
         UIUtils.styleAllComponents(this.getContentPane());
         openTab();
+        contenitore.setLayout(new BoxLayout(contenitore, BoxLayout.Y_AXIS));
+        scroll.setViewportView(contenitore);
+
     }
     
     /**
@@ -73,6 +76,7 @@ public class main extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bot = new javax.swing.JButton();
         add = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         jButton2.setBackground(new java.awt.Color(0, 102, 102));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -80,6 +84,7 @@ public class main extends javax.swing.JFrame {
         jButton2.setText("Gestisci");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -109,6 +114,13 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/agg.png"))); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,7 +128,9 @@ public class main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 297, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,12 +144,13 @@ public class main extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)))
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -161,37 +176,15 @@ public class main extends javax.swing.JFrame {
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
    
     }//GEN-LAST:event_addActionPerformed
-    
-    public void addPanel() {
-        
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
-        File file = new File(path2);
-        
-        try (Scanner scanner = new Scanner(file)) {
-            
-            while (scanner.hasNextLine()) {
-                String stringa = scanner.nextLine();
-                String splitted[] = stringa.split("\\$#=");
-                String stringa2 = splitted[0] + "@#$@#" + splitted[2];
-                String splitted2[] = stringa2.split(",");
-                
-                
-                String nome = splitted2[0];
-                String descrizione = splitted[1];
-                String data = splitted2[2];
-                String orario = splitted2[3];
-                String categoria = splitted2[4];
-                
-                String colore = "#000000";
-                
-            }
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
 
-    }
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        contenitore.removeAll();
+        addPanel();
+        
+        
+    }//GEN-LAST:event_jButton1MouseClicked
+    
+   
     
     private boolean checkFile() throws FileNotFoundException {
         String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
@@ -238,6 +231,7 @@ public class main extends javax.swing.JFrame {
             }
         });
     }
+    
     
     /**
      * @param args the command line arguments
@@ -307,6 +301,53 @@ public class main extends javax.swing.JFrame {
         
     }
     
+    public void addPanel() {
+        
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Eventi.csv";
+        File file = new File(path2);
+        
+        try (Scanner scanner = new Scanner(file)) {
+            
+            while (scanner.hasNextLine()) {
+                
+                String stringa = scanner.nextLine();
+                 
+
+                if(!stringa.equals("")){
+                    
+                    
+                    String splitted[] = stringa.split("\\$#=");
+                    String stringa2 = splitted[0] + "@#$@#" + splitted[2];
+                    String splitted2[] = stringa2.split(",");
+
+
+                    String nome = splitted2[0];
+                    String descrizione = splitted[1];
+                    String data = splitted2[2];
+                    String orario = splitted2[3];
+                    String categoria = splitted2[4];
+
+                    String colore = "#000000";
+
+                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore)) ;
+                    contenitore.add(Box.createRigidArea(new Dimension(0, 10)));
+                    System.out.println(stringa);
+                                       
+                }else{
+                    
+                    break;
+                    
+                }
+            }
+            
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        contenitore.revalidate();
+        contenitore.repaint();
+    }
 
     public static void main(String args[]) {
         try {
@@ -321,6 +362,7 @@ public class main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> add;
     private javax.swing.JButton bot;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

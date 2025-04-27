@@ -28,11 +28,12 @@ import javax.swing.UIManager;
  * @author paolo
  */
 public class EventFrame extends javax.swing.JFrame {
-
+    
+    public JPanel Pan;
     /**
      * Creates new form EventFrame
      */
-    public EventFrame() throws FileNotFoundException {
+    public EventFrame( ) throws FileNotFoundException {
         
         initComponents();
         jLabel7.setVisible(false);
@@ -52,9 +53,11 @@ public class EventFrame extends javax.swing.JFrame {
         mm.setPreferredSize(new Dimension(70, 36));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dateCheck();
+
         
     }
 
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,6 +135,11 @@ public class EventFrame extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(34, 40, 49));
         jButton1.setText("CREA");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -259,11 +267,14 @@ public class EventFrame extends javax.swing.JFrame {
         
         try {
             saveEvent();
+            
         } catch (IOException ex) {
             Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    
+    
     private boolean isBisestile(String anno) {
 
         boolean isBisestile = false;
@@ -401,6 +412,10 @@ public class EventFrame extends javax.swing.JFrame {
             i = 1;
         }
     }//GEN-LAST:event_jToggleButton1MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
