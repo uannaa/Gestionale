@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -30,6 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -51,6 +55,7 @@ public class main extends javax.swing.JFrame {
         initComponents();
         init();
         UIUtils.styleAllComponents(this.getContentPane());
+        openTab();
     }
     
     /**
@@ -150,28 +155,89 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_addItemStateChanged
-       
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            if(add.getSelectedItem().toString().equals("Add Evento")){
-                try {
-                    EventFrame ef = new EventFrame();
-                    ef.setVisible(true);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }  
-            if(add.getSelectedItem().toString().equals("Add Categoria")){
-                
-                CategoriaFrame f = new CategoriaFrame();
-                f.setVisible(true);
-              
-            }  
-        }      
+             
     }//GEN-LAST:event_addItemStateChanged
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_addActionPerformed
+    
+    public void addPanel() {
+        
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
+        File file = new File(path2);
+        
+        try (Scanner scanner = new Scanner(file)) {
+            
+            while (scanner.hasNextLine()) {
+                String stringa = scanner.nextLine();
+                String splitted[] = stringa.split("\\$#=");
+                String stringa2 = splitted[0] + "@#$@#" + splitted[2];
+                String splitted2[] = stringa2.split(",");
+                
+                
+                String nome = splitted2[0];
+                String descrizione = splitted[1];
+                String data = splitted2[2];
+                String orario = splitted2[3];
+                String categoria = splitted2[4];
+                
+                String colore = "#000000";
+                
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+    }
+    
+    private boolean checkFile() throws FileNotFoundException {
+        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
+        File file = new File(path2);
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                if (!line.isEmpty()) {
+                    System.out.println("[Scanner] Riga trovata: " + line);
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    private void openTab() {
+        
+        add.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {                
+                
+                try {
+                    if (add.getSelectedIndex() == 1 && checkFile()) {
+                        EventFrame ef;
+                        try {
+                            ef = new EventFrame();
+                            ef.setVisible(true);
+                        } catch (FileNotFoundException ex) {
+                            System.err.println("Errore in openTab()!");
+                        }
+                    } else if (add.getSelectedIndex() == 2) {
+                        CategoriaFrame f = new CategoriaFrame();
+                        f.setVisible(true);
+                    } else if (!checkFile()) {
+                        JOptionPane.showMessageDialog(rootPane, "DEVI PRIMA CREARE UNA CATEGORIA!");
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
     
     /**
      * @param args the command line arguments
