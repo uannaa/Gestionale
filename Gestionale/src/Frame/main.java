@@ -50,8 +50,7 @@ public class main extends javax.swing.JFrame {
     /**
      * Creates new form main
      */
-    public main(){
-        
+    public main(){ 
         initComponents(); 
         init();
         UIUtils.styleAllComponents(this.getContentPane());
@@ -60,7 +59,6 @@ public class main extends javax.swing.JFrame {
         scroll.setViewportView(contenitore);
         contenitore.removeAll();
         addPanel();
-        
     }
     
     /**
@@ -364,7 +362,7 @@ public class main extends javax.swing.JFrame {
                     }
 
                     contenitore.add(Box.createRigidArea(new Dimension(0, 10)));
-                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore)) ;
+                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore, contenitore)) ;
                     
                     System.out.println(stringa);
                                        
