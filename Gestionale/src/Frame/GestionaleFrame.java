@@ -59,6 +59,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
     
     public GestionaleFrame(String nomeutente){ 
         initComponents(); 
+        setLocationRelativeTo(null);
         init();
         UIUtils.styleAllComponents(this.getContentPane());
         openTab();
