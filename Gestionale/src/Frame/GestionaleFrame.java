@@ -104,6 +104,8 @@ public class GestionaleFrame extends javax.swing.JFrame {
 
         add.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Add Evento", "Add Categoria" }));
         add.setToolTipText("seleziona");
+        add.setMinimumSize(new java.awt.Dimension(115, 26));
+        add.setPreferredSize(new java.awt.Dimension(115, 26));
         add.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 addItemStateChanged(evt);
@@ -119,6 +121,9 @@ public class GestionaleFrame extends javax.swing.JFrame {
         bot.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bot.setForeground(new java.awt.Color(255, 255, 255));
         bot.setText("Gestisci");
+        bot.setMaximumSize(new java.awt.Dimension(77, 26));
+        bot.setMinimumSize(new java.awt.Dimension(77, 26));
+        bot.setPreferredSize(new java.awt.Dimension(77, 26));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/agg.png"))); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,11 +148,11 @@ public class GestionaleFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
@@ -158,7 +163,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(27, 27, 27))
