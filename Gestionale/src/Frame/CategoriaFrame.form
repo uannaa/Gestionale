@@ -77,7 +77,7 @@
                       <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="NEvento" alignment="0" max="32767" attributes="0"/>
+                      <Component id="NCategoria" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -101,7 +101,7 @@
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="NEvento" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="NCategoria" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
             <Property name="text" type="java.lang.String" value="Nome categoria :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="NEvento">
+        <Component class="javax.swing.JTextField" name="NCategoria">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>

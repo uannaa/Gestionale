@@ -329,7 +329,7 @@ public class EventFrame extends javax.swing.JFrame {
 
 
         
-                yy.addActionListener(new ActionListener(){
+        yy.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 String selectedYear = (String) yy.getSelectedItem();
                 String selectedMonth = (String) mm.getSelectedItem();

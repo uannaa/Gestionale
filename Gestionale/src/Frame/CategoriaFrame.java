@@ -39,7 +39,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        NEvento = new javax.swing.JTextField();
+        NCategoria = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -62,8 +62,8 @@ public class CategoriaFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(238, 238, 238));
         jLabel1.setText("Nome categoria :");
 
-        NEvento.setForeground(new java.awt.Color(0, 0, 0));
-        NEvento.setToolTipText("Inserisci il nome della categoria");
+        NCategoria.setForeground(new java.awt.Color(0, 0, 0));
+        NCategoria.setToolTipText("Inserisci il nome della categoria");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(238, 238, 238));
@@ -106,7 +106,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NEvento)
+                    .addComponent(NCategoria)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -125,7 +125,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(NCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,7 +159,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        if (NEvento.getText().equals("") || jTextField1.getText().equals("") || jTextField1.getText().length() != 6 || !checkHEX("#" + jTextField1.getText())) {
+        if (NCategoria.getText().equals("") || jTextField1.getText().equals("") || jTextField1.getText().length() != 6 || !checkHEX("#" + jTextField1.getText())) {
             jLabel5.setVisible(true);
             return;
         }
@@ -168,7 +168,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
         String pathFile1 = path2 + File.separator + "Categorie.csv";
         
         try (FileWriter file = new FileWriter(pathFile1, true)) {
-            String liena = NEvento.getText() + " , #" + jTextField1.getText() + "\n";
+            String liena = NCategoria.getText() + " , #" + jTextField1.getText() + "\n";
             file.write(liena);
         } catch (IOException ex) {
             Logger.getLogger(CategoriaFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,7 +216,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField NEvento;
+    private javax.swing.JTextField NCategoria;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;

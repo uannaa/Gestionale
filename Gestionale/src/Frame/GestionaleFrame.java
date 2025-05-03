@@ -66,7 +66,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
         scroll.setViewportView(contenitore);
         contenitore.removeAll();
         this.nomeutente = nomeutente;
-        addPanel();
+        
     }
     
     /**
