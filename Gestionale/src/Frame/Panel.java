@@ -4,9 +4,12 @@
  */
 package Frame;
 
+
+import static Class.UIUtils.styleButton;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 
@@ -36,6 +40,7 @@ public class Panel extends javax.swing.JPanel {
      */
     public Panel(String n , String d , String dat , String o , String ca ,String color, JPanel contenitore) {
         initComponents();
+        styleButton(Del);
         nome.setText(n);
         descrizione.setText(d);
         data.setText(dat);
@@ -45,8 +50,9 @@ public class Panel extends javax.swing.JPanel {
         this.contenitore = contenitore;
         jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 //        descrizione.setBackground(new Color(Color.decode(c).getRed(), Color.decode(c).getGreen(), Color.decode(c).getBlue(), 90));
-        jButton1.addActionListener(new ActionListener() {
+        Del.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                
                 contenitore.remove(Panel.this);
                 contenitore.revalidate();
                 contenitore.repaint();
@@ -140,7 +146,7 @@ public class Panel extends javax.swing.JPanel {
         categoria = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descrizione = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        Del = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
@@ -177,10 +183,15 @@ public class Panel extends javax.swing.JPanel {
         descrizione.setRows(5);
         jScrollPane1.setViewportView(descrizione);
 
-        jButton1.setText("Delete");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Del.setBackground(new java.awt.Color(238, 238, 238));
+        Del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/cestino.png"))); // NOI18N
+        Del.setBorder(null);
+        Del.setMaximumSize(new java.awt.Dimension(76, 35));
+        Del.setMinimumSize(new java.awt.Dimension(76, 35));
+        Del.setPreferredSize(new java.awt.Dimension(76, 35));
+        Del.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                DelActionPerformed(evt);
             }
         });
 
@@ -212,8 +223,8 @@ public class Panel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(34, 34, 34))))
+                        .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,21 +237,16 @@ public class Panel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(data))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(data))
+                    .addComponent(Del, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(ora))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(categoria))
@@ -248,16 +254,16 @@ public class Panel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_DelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Del;
     private javax.swing.JLabel categoria;
     private javax.swing.JLabel data;
     private javax.swing.JTextArea descrizione;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
