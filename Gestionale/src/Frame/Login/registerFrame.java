@@ -48,7 +48,10 @@ public class registerFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Register");
+        setMaximumSize(new java.awt.Dimension(289, 380));
         setMinimumSize(new java.awt.Dimension(289, 380));
+        setResizable(false);
         setSize(new java.awt.Dimension(289, 480));
 
         jPanel1.setBackground(new java.awt.Color(34, 40, 49));
@@ -160,7 +163,7 @@ public class registerFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
