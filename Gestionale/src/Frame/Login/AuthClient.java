@@ -22,7 +22,7 @@ public class AuthClient {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
             
-            if 
+             
             
             out.println(tipo + ":" + username + ":" + password);
             String response = in.readLine();
