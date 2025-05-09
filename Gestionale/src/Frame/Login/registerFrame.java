@@ -191,7 +191,7 @@ public class registerFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Registrazione riuscita!");
             
         } else {
-            JOptionPane.showMessageDialog(this, "Errore nella registrazione. L'utente potrebbe già esistere.");
+            JOptionPane.showMessageDialog(this, "Errore nella registrazione.");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
