@@ -49,7 +49,6 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 public class GestionaleFrame extends javax.swing.JFrame {
     public JPanel contenitore = new JPanel();
     private String nomeutente;
-    private String username;
     
     /**
      * Creates new form main
@@ -61,7 +60,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
     //TODO 
     
     public GestionaleFrame(String nomeutente){ 
-        this.nomeutente = username;
+        this.nomeutente = nomeutente;
         initComponents(); 
         setLocationRelativeTo(null);
         init();
@@ -263,13 +262,13 @@ public class GestionaleFrame extends javax.swing.JFrame {
                     if (add.getSelectedIndex() == 1 && checkFile()) {
                         EventFrame ef;
                         try {
-                            ef = new EventFrame();
+                            ef = new EventFrame(nomeutente);
                             ef.setVisible(true);
                         } catch (FileNotFoundException ex) {
                             System.err.println("Errore in openTab()!");
                         }
                     } else if (add.getSelectedIndex() == 2) {
-                        CategoriaFrame f = new CategoriaFrame();
+                        CategoriaFrame f = new CategoriaFrame(nomeutente);
                         f.setVisible(true);
                     } else if (!checkFile()) {
                         JOptionPane.showMessageDialog(rootPane, "DEVI PRIMA CREARE UNA CATEGORIA!");

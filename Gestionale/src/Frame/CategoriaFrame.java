@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -176,9 +177,14 @@ public class CategoriaFrame extends javax.swing.JFrame {
             return;
         }
         
-        String categoria = NCategoria.getText() + jTextField1.getText();
-        AuthClient.inviaDati("CATEGORIA", username, categoria);
-        System.out.println("Categoria creata!");
+        String categoria = NCategoria.getText() + ":$#:" + "#" + jTextField1.getText();
+        boolean success = AuthClient.inviaDati("CATEGORIA", username, categoria);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Categoria creata!");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Si e verificato un errore, riprova!");
+        }
         
         dispose();
         

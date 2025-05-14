@@ -30,11 +30,13 @@ import javax.swing.UIManager;
 public class EventFrame extends javax.swing.JFrame {
     
     public JPanel Pan;
+    String username;
     /**
      * Creates new form EventFrame
      */
-    public EventFrame( ) throws FileNotFoundException {
+    public EventFrame(String username) throws FileNotFoundException {
         
+        this.username = username;
         initComponents();
         jLabel7.setVisible(false);
         try {
@@ -48,7 +50,7 @@ public class EventFrame extends javax.swing.JFrame {
         load(0, yy, true);
         load(12, jComboBox1, false);
         load(59, jComboBox2, false);
-        loadCategorie(cat);
+        loadCategorie(cat, username);
         gg.setPreferredSize(new Dimension(70, 36));
         mm.setPreferredSize(new Dimension(70, 36));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -451,9 +453,10 @@ public class EventFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            private String username;
             public void run() {
                 try {
-                    new EventFrame().setVisible(true);
+                    new EventFrame(this.username).setVisible(true);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -488,7 +491,7 @@ public class EventFrame extends javax.swing.JFrame {
         }
         
     }
-    private void loadCategorie(JComboBox c) throws FileNotFoundException {
+    private void loadCategorie(JComboBox c, String username) throws FileNotFoundException {
         String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
         String pathFile1 = path2 + File.separator + "Categorie.csv";
         
