@@ -5,6 +5,7 @@
 package Frame;
 
 import Class.UIUtils;
+import Frame.Login.AuthClient;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,10 +18,12 @@ import java.util.logging.Logger;
  */
 public class CategoriaFrame extends javax.swing.JFrame {
 
+    private String username;
     /**
      * Creates new form CategoriaFrame
      */
-    public CategoriaFrame() {
+    public CategoriaFrame(String username) {
+        this.username = username;
         initComponents();
         UIUtils.styleButton(jButton1);
         jLabel5.setVisible(false);
@@ -173,16 +176,8 @@ public class CategoriaFrame extends javax.swing.JFrame {
             return;
         }
         
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
-        String pathFile1 = path2 + File.separator + "Categorie.csv";
-        
-        try (FileWriter file = new FileWriter(pathFile1, true)) {
-            String liena = NCategoria.getText() + " , #" + jTextField1.getText() + "\n";
-            file.write(liena);
-        } catch (IOException ex) {
-            Logger.getLogger(CategoriaFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        String categoria = NCategoria.getText() + jTextField1.getText();
+        AuthClient.inviaDati("CATEGORIA", username, categoria);
         System.out.println("Categoria creata!");
         
         dispose();
@@ -218,8 +213,9 @@ public class CategoriaFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            private String username;
             public void run() {
-                new CategoriaFrame().setVisible(true);
+                new CategoriaFrame(this.username).setVisible(true);
             }
         });
     }

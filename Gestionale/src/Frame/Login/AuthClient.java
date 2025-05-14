@@ -30,6 +30,8 @@ public class AuthClient {
         }
     }
     
+    
+    //Ci servira per l invio dei dati sul server 
     public static boolean inviaDati(String tipo, String username, String s) {
         try (
             Socket socket = new Socket("45.88.223.77", 12345);
