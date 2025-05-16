@@ -70,6 +70,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
         scroll.setViewportView(contenitore);
         contenitore.removeAll();
         this.nomeutente = nomeutente;
+        contenitore.setBackground(Color.decode("#FDFFFC"));
         
     }
     
@@ -105,7 +106,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
         scroll.setBorder(null);
         scroll.setForeground(new java.awt.Color(102, 102, 102));
 
-        jPanel2.setBackground(new java.awt.Color(34, 40, 49));
+        jPanel2.setBackground(new java.awt.Color(3, 83, 164));
 
         add.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Add Evento", "Add Categoria" }));
         add.setToolTipText("seleziona");
@@ -143,10 +144,11 @@ public class GestionaleFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel1.setForeground(new java.awt.Color(253, 255, 252));
         jLabel1.setText("Gestionale");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        logout.setForeground(new java.awt.Color(253, 255, 252));
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

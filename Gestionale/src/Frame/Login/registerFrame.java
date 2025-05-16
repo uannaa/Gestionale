@@ -54,7 +54,7 @@ public class registerFrame extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(289, 480));
 
-        jPanel1.setBackground(new java.awt.Color(34, 40, 49));
+        jPanel1.setBackground(new java.awt.Color(3, 83, 164));
         jPanel1.setPreferredSize(new java.awt.Dimension(289, 405));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -105,11 +105,12 @@ public class registerFrame extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel4.setForeground(new java.awt.Color(253, 255, 252));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("REGISTER");
 
         jSeparator1.setBackground(new java.awt.Color(238, 238, 238));
+        jSeparator1.setForeground(new java.awt.Color(253, 255, 252));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -163,7 +164,7 @@ public class registerFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

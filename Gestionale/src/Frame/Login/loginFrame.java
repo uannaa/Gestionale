@@ -55,7 +55,7 @@ public class loginFrame extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(289, 405));
 
-        jPanel1.setBackground(new java.awt.Color(34, 40, 49));
+        jPanel1.setBackground(new java.awt.Color(3, 83, 164));
         jPanel1.setMaximumSize(new java.awt.Dimension(289, 405));
         jPanel1.setMinimumSize(new java.awt.Dimension(289, 405));
         jPanel1.setPreferredSize(new java.awt.Dimension(289, 405));
@@ -84,7 +84,7 @@ public class loginFrame extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel4.setForeground(new java.awt.Color(253, 255, 252));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("LOGIN");
 
@@ -93,6 +93,7 @@ public class loginFrame extends javax.swing.JFrame {
         jLabel1.setText("Password :");
 
         jSeparator1.setBackground(new java.awt.Color(238, 238, 238));
+        jSeparator1.setForeground(new java.awt.Color(253, 255, 252));
 
         login.setText("Login");
         login.setMaximumSize(new java.awt.Dimension(77, 26));
@@ -176,7 +177,7 @@ public class loginFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

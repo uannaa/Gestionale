@@ -96,7 +96,7 @@ public class EventFrame extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(436, 540));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(34, 40, 49));
+        jPanel1.setBackground(new java.awt.Color(3, 83, 164));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Ora :");
@@ -148,10 +148,11 @@ public class EventFrame extends javax.swing.JFrame {
 
         jToggleButton1.setBackground(new java.awt.Color(238, 238, 238));
         jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jToggleButton1.setForeground(new java.awt.Color(34, 40, 49));
+        jToggleButton1.setForeground(new java.awt.Color(3, 83, 164));
         jToggleButton1.setText("P.M.");
         jToggleButton1.setToolTipText("Clicca su questo tasto se l'evento e' di pomeriggio");
         jToggleButton1.setFocusPainted(false);
+        jToggleButton1.setFocusable(false);
         jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jToggleButton1MouseClicked(evt);
@@ -187,11 +188,11 @@ public class EventFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToggleButton1))
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,13 +408,13 @@ public class EventFrame extends javax.swing.JFrame {
         
         if(i == 1){
             
-            jToggleButton1.setBackground(new Color(34,40,49));
+            jToggleButton1.setBackground(Color.decode("#0353A4"));
             jToggleButton1.setForeground(new Color(238,238,238));
             i = 0;
         }else{
             
             jToggleButton1.setBackground(new Color(238,238,238));
-            jToggleButton1.setForeground(new Color(34,40,49));
+            jToggleButton1.setForeground(Color.decode("#0353A4"));
             
             i = 1;
         }

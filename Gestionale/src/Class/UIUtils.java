@@ -12,11 +12,11 @@ import java.awt.*;
 public class UIUtils {
 
     // Colori principali
-    public static final Color HEADER_COLOR      = Color.decode("#222831");
-    public static final Color BUTTON_COMBO_COLOR = Color.decode("#EEEEEE");
-    public static final Color OPTION_LIST_COLOR = Color.decode("#EEEEEE");
-    public static final Color TEXT_COLOR        = Color.decode("#222831");
-    public static final Color BG_COLOR          = Color.decode("#EEEEEE");
+    public static final Color HEADER_COLOR      = Color.decode("#0353A4");
+    public static final Color BUTTON_COMBO_COLOR = Color.decode("#FDFFFC");
+    public static final Color OPTION_LIST_COLOR = Color.decode("#FDFFFC");
+    public static final Color TEXT_COLOR        = Color.decode("#0353A4");
+    public static final Color BG_COLOR          = Color.decode("#FDFFFC");
     public static final Color ARROW_COLOR       = Color.decode("#393E46");
 
     // Bordo bianco
