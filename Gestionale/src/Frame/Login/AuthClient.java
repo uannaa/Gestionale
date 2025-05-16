@@ -46,4 +46,20 @@ public class AuthClient {
             return false;
         }
     }
+    
+    public static boolean richiediDati(String tipo, String username) {
+        try (
+            Socket socket = new Socket("45.88.223.77", 12345);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        ) {
+            out.println(tipo + ":#$%#**&^$:" + username);
+            String response = in.readLine();
+            return "OK".equals(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+
