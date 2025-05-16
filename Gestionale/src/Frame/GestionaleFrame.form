@@ -98,9 +98,9 @@
                   <Component id="jButton1" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="bot" min="-2" pref="95" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="add" min="-2" pref="139" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="add" min="-2" pref="139" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="logout" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
@@ -114,8 +114,8 @@
                       <Component id="jButton1" min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="bot" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="add" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="logout" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="add" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel1" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>

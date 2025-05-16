@@ -1,55 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Frame;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
-import javax.swing.BorderFactory;
-import javax.swing.JColorChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-/**
- *
- * @author paolo
- */
 public class ColorPicker {
-    public static void main(String[] args) {
+
+    private String color = "#000000";
+    private JColorChooser colorChooser;
+
+    public ColorPicker() {
         createWindow();
-   }
+    }
 
-   private static void createWindow() {    
-      JFrame frame = new JFrame("Swing Tester");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      createUI(frame);
-      frame.setSize(650, 300);      
-      frame.setLocationRelativeTo(null);  
-      frame.setResizable(false);
-      frame.setVisible(true);
-   }
+    public String getColor() {
+        return this.color;
+    }
 
-   private static void createUI(final JFrame frame){  
-      JPanel panel = new JPanel();
-      LayoutManager layout = new FlowLayout();  
-      panel.setLayout(layout);       
-      final JLabel colorLabel = new JLabel("Color Chooser Example");     
-      final JColorChooser colorChooser = new JColorChooser();
+    public void createWindow() {
+        JFrame frame = new JFrame("Color Picker");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        createUI(frame);
+        frame.setSize(650, 400);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 
-      colorChooser.setPreviewPanel(new JPanel());
-      colorChooser.setBorder(BorderFactory.createTitledBorder("Choose Label Color"));
-      AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
-      
-      for(int i = 0; i < panels.length - 1; i++){
-         colorChooser.removeChooserPanel(panels[i]);
-      }     
+    private void createUI(final JFrame frame) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
 
-      panel.add(colorLabel);
-      panel.add(colorChooser);
-      frame.getContentPane().add(panel, BorderLayout.CENTER);    
-   }
+        JLabel colorLabel = new JLabel("Color Chooser Example");
+        colorChooser = new JColorChooser();
+        colorChooser.setPreviewPanel(new JPanel());
+        colorChooser.setBorder(BorderFactory.createTitledBorder("Choose Label Color"));
+
+        // Rimuovi pannelli inutili
+        AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+        for (int i = 0; i < panels.length - 1; i++) {
+            colorChooser.removeChooserPanel(panels[i]);
+        }
+
+        // Bottone per confermare
+        JButton confirmButton = new JButton("Conferma colore");
+        confirmButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Color selectedColor = colorChooser.getColor();
+                if (selectedColor != null) {
+                    color = String.format("#%02x%02x%02x", 
+                              selectedColor.getRed(), 
+                              selectedColor.getGreen(), 
+                              selectedColor.getBlue());
+                    JOptionPane.showMessageDialog(frame, "Colore selezionato: " + color);
+                }
+            }
+        });
+
+        panel.add(colorLabel);
+        panel.add(colorChooser);
+        panel.add(confirmButton);
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+    }
 }
