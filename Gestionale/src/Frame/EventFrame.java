@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -274,12 +275,13 @@ public class EventFrame extends javax.swing.JFrame {
             return;
         }
         
+
         try {
             saveEvent();
-            
         } catch (IOException ex) {
             Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
     
     
@@ -373,7 +375,28 @@ public class EventFrame extends javax.swing.JFrame {
 
     }
     
-    private void saveEvent() throws IOException {        
+    private void saveEvent() throws IOException { 
+        String nome = NEvento.getText();
+        String descrizione = "$#=" + Descriz.getText() + "$#=";
+        String data = (String) gg.getSelectedItem() + "-" + (String) mm.getSelectedItem() + "-" + (String) yy.getSelectedItem();
+        String ora = (String) jComboBox1.getSelectedItem() + ":" + (String) jComboBox2.getSelectedItem();
+        String categoria = (String) cat.getSelectedItem();    
+        if (jToggleButton1.isSelected()) {
+            Integer orario = Integer.parseInt((String) jComboBox1.getSelectedItem());
+            orario += 12;
+            String orax[] = ora.split(":");
+            ora = String.valueOf(orario) + ":" + orax[1];
+        }
+        
+        String evento = nome + "," + descrizione + "," + data + "," + ora + "," + categoria + "\n";
+        
+        boolean success = AuthClient.inviaDati("EVENTO", username, evento);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Evento creato!");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Si e verificato un errore, riprova!");
+        }
     }
     
     public int i = 1;
