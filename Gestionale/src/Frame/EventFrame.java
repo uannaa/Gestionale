@@ -5,6 +5,7 @@
 package Frame;
 
 import Class.UIUtils;
+import Frame.Login.AuthClient;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -34,7 +36,7 @@ public class EventFrame extends javax.swing.JFrame {
     /**
      * Creates new form EventFrame
      */
-    public EventFrame(String username) throws FileNotFoundException {
+    public EventFrame(String username) throws FileNotFoundException, IOException {
         
         this.username = username;
         initComponents();
@@ -371,34 +373,7 @@ public class EventFrame extends javax.swing.JFrame {
 
     }
     
-    private void saveEvent() throws IOException {
-        
-        String nome = NEvento.getText();
-        String descrizione = "$#=" + Descriz.getText() + "$#=";
-        String data = (String) gg.getSelectedItem() + "-" + (String) mm.getSelectedItem() + "-" + (String) yy.getSelectedItem();
-        String ora = (String) jComboBox1.getSelectedItem() + ":" + (String) jComboBox2.getSelectedItem();
-        String categoria = (String) cat.getSelectedItem();
-        
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
-        String pathFile2 = path2 + File.separator + "Eventi.csv";
-       
-        
-        if (jToggleButton1.isSelected()) {
-            Integer orario = Integer.parseInt((String) jComboBox1.getSelectedItem());
-            orario += 12;
-            String orax[] = ora.split(":");
-            ora = String.valueOf(orario) + ":" + orax[1];
-        }
-        
-        try (FileWriter writer  = new FileWriter(pathFile2, true)) {
-            writer.write(nome + "," + descrizione + "," + data + "," + ora + "," + categoria + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        dispose();
-        System.out.println("Evento creato!");
-        
+    private void saveEvent() throws IOException {        
     }
     
     public int i = 1;
@@ -460,6 +435,8 @@ public class EventFrame extends javax.swing.JFrame {
                     new EventFrame(this.username).setVisible(true);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -492,21 +469,12 @@ public class EventFrame extends javax.swing.JFrame {
         }
         
     }
-    private void loadCategorie(JComboBox c, String username) throws FileNotFoundException {
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale";
-        String pathFile1 = path2 + File.separator + "Categorie.csv";
-        
-        File file = new File(pathFile1);
-        try (Scanner scanner = new Scanner(file)) {
-            
-            while (scanner.hasNextLine()) {
-                String linea = scanner.nextLine();
-                String categoria[] = linea.split(",");
-                c.addItem(categoria[0]);
-            }
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void loadCategorie(JComboBox c, String username) throws FileNotFoundException, IOException {
+        Vector<String> catout = AuthClient.richiediDati("RICHIEDI", username, "Categorie");
+//        Vector<String> cat = null;
+        for (String s : catout) {
+            String[] f = s.split(":\\$#:");
+            c.addItem(f[0]);
         }
     }
 

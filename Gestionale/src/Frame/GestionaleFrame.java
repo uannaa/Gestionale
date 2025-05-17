@@ -5,6 +5,7 @@
 package Frame;
 
 import Class.UIUtils;
+import Frame.Login.AuthClient;
 import Frame.Login.loginFrame;
 import java.awt.Color;
 import java.awt.Component;
@@ -24,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -237,22 +239,14 @@ public class GestionaleFrame extends javax.swing.JFrame {
    
     
     private boolean checkFile() throws FileNotFoundException {
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
-        File file = new File(path2);
-
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    System.out.println("[Scanner] Riga trovata: " + line);
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Vector<String> catout = AuthClient.richiediDati("RICHIEDI", nomeutente, "Categorie");
+        if (catout == null || catout.isEmpty()) {
+            return false;
         }
-
-        return false;
+        if (catout.firstElement().trim().isEmpty()) {
+            return false;
+        }
+        return true;
     }
     
     private void openTab() {
@@ -268,11 +262,13 @@ public class GestionaleFrame extends javax.swing.JFrame {
                             ef.setVisible(true);
                         } catch (FileNotFoundException ex) {
                             System.err.println("Errore in openTab()!");
+                        } catch (IOException ex) {
+                            Logger.getLogger(GestionaleFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else if (add.getSelectedIndex() == 2) {
                         CategoriaFrame f = new CategoriaFrame(nomeutente);
                         f.setVisible(true);
-                    } else if (!checkFile()) {
+                    }  else if (!checkFile()) {
                         JOptionPane.showMessageDialog(rootPane, "DEVI PRIMA CREARE UNA CATEGORIA!");
                     }
                 } catch (FileNotFoundException ex) {
