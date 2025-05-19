@@ -6,6 +6,7 @@ package Frame;
 
 
 import static Class.UIUtils.styleButton;
+import Frame.Login.AuthClient;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,7 +23,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 
@@ -34,13 +39,25 @@ public class Panel extends javax.swing.JPanel {
     
     public String c ;
     public JPanel contenitore;
+    private String nome_;
+    private String descrizione_;
+    private String data_;
+    private String orario_;
+    private String categoria_;
+    private GestionaleFrame f;
     
     /**
      * Creates new form Panel
      */
-    public Panel(String n , String d , String dat , String o , String ca ,String color, JPanel contenitore) {
+    public Panel(String n , String d , String dat , String o , String ca ,String color, JPanel contenitore, GestionaleFrame f) {
         initComponents();
         styleButton(Del);
+        this.nome_ = n;
+        this.descrizione_ = d;
+        this.data_ = dat;
+        this.orario_ = o;
+        this.categoria_ = ca;
+        this.f = f;
         nome.setText(n);
         descrizione.setText(d);
         data.setText(dat);
@@ -50,18 +67,6 @@ public class Panel extends javax.swing.JPanel {
         this.contenitore = contenitore;
         jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 //        descrizione.setBackground(new Color(Color.decode(c).getRed(), Color.decode(c).getGreen(), Color.decode(c).getBlue(), 90));
-        Del.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                
-                contenitore.remove(Panel.this);
-                contenitore.revalidate();
-                contenitore.repaint();
-
-                String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Eventi.csv";
-                
-                eliminaEventoDaCSV(path2, n, d, dat, o, ca, color);
-            }
-        });
     }
     
     @Override
@@ -79,49 +84,49 @@ public class Panel extends javax.swing.JPanel {
         // Impostare il colore del bordo
         g2d.setColor(Color.BLACK);
         
-        // Disegnare il bordo del rettangolo stondato (solo contorno)
+        // Disegnare  bordo del rettangolo stondato (solo contorno)
         g2d.setStroke(new BasicStroke(1)); // Imposta lo spessore del bordo a 1px
         g2d.drawRoundRect(10, 10, getWidth() - 20, getHeight() - 20, 30, 30);
     }
     
-    public static void eliminaEventoDaCSV(String percorsoFile, String nome, String descrizione, String data, String ora, String categoria, String colore) {
-        File file = new File(percorsoFile);
-        File tempFile = new File("temp.csv");
-
-        boolean eliminato = false;
-
-        try (
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
-        ) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parti = line.split(",");
-
-                // Confronto rigoroso: se tutti i campi combaciano ed è il primo match, salta questa riga
-                if (!eliminato && parti.length >= 6 &&
-                    parti[0].equals(nome) &&
-                    parti[1].equals(descrizione) &&
-                    parti[2].equals(data) &&
-                    parti[3].equals(ora) &&
-                    parti[4].equals(categoria) &&
-                    parti[5].equals(colore)) {
-                    eliminato = true;
-                    continue; // non scrivere questa riga
-                }
-
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Sostituisci il file originale con quello aggiornato
-        if (file.delete()) {
-            tempFile.renameTo(file);
-        }
-    }
+//    public static void eliminaEventoDaCSV(String percorsoFile, String nome, String descrizione, String data, String ora, String categoria, String colore) {
+//        File file = new File(percorsoFile);
+//        File tempFile = new File("temp.csv");
+//
+//        boolean eliminato = false;
+//
+//        try (
+//            BufferedReader reader = new BufferedReader(new FileReader(file));
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+//        ) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] parti = line.split(",");
+//
+//                // Confronto rigoroso: se tutti i campi combaciano ed è il primo match, salta questa riga
+//                if (!eliminato && parti.length >= 6 &&
+//                    parti[0].equals(nome) &&
+//                    parti[1].equals(descrizione) &&
+//                    parti[2].equals(data) &&
+//                    parti[3].equals(ora) &&
+//                    parti[4].equals(categoria) &&
+//                    parti[5].equals(colore)) {
+//                    eliminato = true;
+//                    continue; // non scrivere questa riga
+//                }
+//
+//                writer.write(line);
+//                writer.newLine();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Sostituisci il file originale con quello aggiornato
+//        if (file.delete()) {
+//            tempFile.renameTo(file);
+//        }
+//    }
 
 
 
@@ -147,6 +152,7 @@ public class Panel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         descrizione = new javax.swing.JTextArea();
         Del = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
@@ -179,7 +185,9 @@ public class Panel extends javax.swing.JPanel {
         categoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         categoria.setText("{categoria}");
 
+        descrizione.setEditable(false);
         descrizione.setColumns(20);
+        descrizione.setLineWrap(true);
         descrizione.setRows(5);
         jScrollPane1.setViewportView(descrizione);
 
@@ -192,6 +200,18 @@ public class Panel extends javax.swing.JPanel {
         Del.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DelActionPerformed(evt);
+            }
+        });
+
+        editButton.setBackground(new java.awt.Color(255, 255, 255));
+        editButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/edit-button.png"))); // NOI18N
+        editButton.setBorder(null);
+        editButton.setMaximumSize(new java.awt.Dimension(76, 35));
+        editButton.setMinimumSize(new java.awt.Dimension(76, 35));
+        editButton.setPreferredSize(new java.awt.Dimension(76, 35));
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
             }
         });
 
@@ -212,18 +232,17 @@ public class Panel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ora, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(109, 109, 109)))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ora, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
@@ -253,14 +272,43 @@ public class Panel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel9)
                                     .addComponent(categoria)))
-                            .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Del, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(37, 37, 37))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelActionPerformed
-        // TODO add your handling code here:
+        String user = f.getUsername();
+        String nom = nome_;
+        String desc = "$#=" + descrizione_ + "$#=";
+        String dataa = data_;
+        String or = orario_;
+        String c = categoria_;
+        String evento = nom + "," + desc + "," + dataa + "," + or + "," + c;
+        System.out.println(evento);
+                
+        boolean succes = AuthClient.inviaDati("DELETE", user, evento);
+        if (succes) {
+            JOptionPane.showMessageDialog(this, "Evento eliminato!");
+            setVisible(false);
+            f.update();
+        } else {
+            JOptionPane.showMessageDialog(this, "Evento non eliminato!");
+        }
+        
     }//GEN-LAST:event_DelActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        try {
+            EventFrame e = new EventFrame(nome_, descrizione_, data_, orario_, categoria_, f.getUsername(), f, true);
+            e.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_editButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -268,6 +316,7 @@ public class Panel extends javax.swing.JPanel {
     private javax.swing.JLabel categoria;
     private javax.swing.JLabel data;
     private javax.swing.JTextArea descrizione;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

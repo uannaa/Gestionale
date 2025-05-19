@@ -157,8 +157,8 @@ public class CategoriaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(12, 12, 12)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,6 +181,10 @@ public class CategoriaFrame extends javax.swing.JFrame {
 
     public static boolean checkHEX(String colorStr) {
         return colorStr.matches("^#([A-Fa-f0-9]{6})$");
+    }
+    
+    public void setColor(String color) {
+        jTextField1.setText(color);
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -206,7 +210,7 @@ public class CategoriaFrame extends javax.swing.JFrame {
     
     //TODO: Il colore scelto nel picker deve essere assegnato ad una variabile dopo aver cliccato conferma
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ColorPicker picker = new ColorPicker();
+        ColorPicker picker = new ColorPicker(CategoriaFrame.this);
         String c = picker.getColor();
         System.out.println(c);
     }//GEN-LAST:event_jButton3ActionPerformed

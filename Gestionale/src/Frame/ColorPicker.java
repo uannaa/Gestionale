@@ -10,8 +10,10 @@ public class ColorPicker {
 
     private String color = "#000000";
     private JColorChooser colorChooser;
+    private CategoriaFrame f;
 
-    public ColorPicker() {
+    public ColorPicker(CategoriaFrame f) {
+        this.f = f;
         createWindow();
     }
 
@@ -50,11 +52,13 @@ public class ColorPicker {
             public void actionPerformed(ActionEvent e) {
                 Color selectedColor = colorChooser.getColor();
                 if (selectedColor != null) {
-                    color = String.format("#%02x%02x%02x", 
+                    color = String.format("%02x%02x%02x", 
                               selectedColor.getRed(), 
                               selectedColor.getGreen(), 
                               selectedColor.getBlue());
                     JOptionPane.showMessageDialog(frame, "Colore selezionato: " + color);
+                    f.setColor(color);
+                    frame.dispose();
                 }
             }
         });

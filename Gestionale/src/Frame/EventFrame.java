@@ -34,12 +34,20 @@ public class EventFrame extends javax.swing.JFrame {
     
     public JPanel Pan;
     String username;
+    private GestionaleFrame mainframe;
+    private boolean edit;
+    private String nome_;
+    private String descrizione_;
+    private String data_;
+    private String orario_;
+    private String categoria_;
     /**
      * Creates new form EventFrame
      */
-    public EventFrame(String username) throws FileNotFoundException, IOException {
-        
+    public EventFrame(String username, GestionaleFrame mainframe, boolean edit) throws FileNotFoundException, IOException {
+        this.mainframe = mainframe;
         this.username = username;
+        this.edit = edit;
         initComponents();
         jLabel7.setVisible(false);
         try {
@@ -58,8 +66,60 @@ public class EventFrame extends javax.swing.JFrame {
         mm.setPreferredSize(new Dimension(70, 36));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dateCheck();
-
         
+    }
+    
+    public EventFrame(String nome, String descrizione, String data, String orario, String categoria, String username, GestionaleFrame mainframe, boolean edit) throws IOException {
+        this.mainframe = mainframe;
+        this.username = username;
+        this.edit = edit;
+        this.nome_ = nome;
+        this.descrizione_ = descrizione;
+        this.data_ = data;
+        this.orario_ = orario;
+        this.categoria_ = categoria;
+        initComponents();
+        jLabel7.setVisible(false);
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        UIUtils.styleAllComponents(this.getContentPane());
+        load(31, gg, false);
+        load(12, mm, false);
+        load(0, yy, true);
+        load(12, jComboBox1, false);
+        load(59, jComboBox2, false);
+        loadCategorie(cat, username);
+        gg.setPreferredSize(new Dimension(70, 36));
+        mm.setPreferredSize(new Dimension(70, 36));
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        dateCheck();
+        NEvento.setText(nome);
+        Descriz.setText(descrizione);
+        String sp[] = data.split("-",3);
+        System.out.println(sp[0] + sp[1] + sp[2]);
+        gg.setSelectedItem(sp[0]);
+        mm.setSelectedItem(sp[1]);
+        yy.setSelectedItem(sp[2]);
+        String sp2[] = orario.split(":");
+        jComboBox2.setSelectedItem(sp2[1]);
+        int orh = Integer.parseInt(sp2[0]);
+        if (orh > 12) {
+            orh -= 12;
+            jToggleButton1.setSelected(true);
+        }
+        if (orh < 10) {
+            sp2[0] = "0" + String.valueOf(orh);
+        } else {
+            sp2[0] = String.valueOf(orh);
+        }
+        
+        System.out.println(sp2[0] + sp2[1]);
+        jComboBox1.setSelectedItem(sp2[0]);
+        cat.setSelectedItem(categoria);
+        jButton1.setText("Modifica");
     }
 
      
@@ -123,6 +183,7 @@ public class EventFrame extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         Descriz.setColumns(20);
+        Descriz.setLineWrap(true);
         Descriz.setRows(5);
         Descriz.setToolTipText("Inserisci una descrizione all'evento");
         jScrollPane1.setViewportView(Descriz);
@@ -269,19 +330,24 @@ public class EventFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Creare tutto l'evento.
-        if (NEvento.getText().equals("")) {
-            jLabel7.setVisible(true);
-            return;
+        if (!edit) {
+            if (NEvento.getText().equals("")) {
+                jLabel7.setVisible(true);
+                return;
+            }
+
+            try {
+                boolean s = saveEvent();
+                if (s) {
+                    mainframe.update();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            boolean success = modifyEvent();
         }
         
-
-        try {
-            saveEvent();
-        } catch (IOException ex) {
-            Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
     }//GEN-LAST:event_jButton1ActionPerformed
     
     
@@ -369,13 +435,47 @@ public class EventFrame extends javax.swing.JFrame {
                  
             }
         });
-
-
-
-
     }
     
-    private void saveEvent() throws IOException { 
+    
+    private boolean modifyEvent() {
+        String nome_o = nome_;
+        String descrizione_o = "$#=" + descrizione_ + "$#=";
+        String data_o = data_;
+        String ora_o = orario_;
+        String categoria_o = categoria_;
+        
+        String evento_vecchio = nome_o + "," + descrizione_o + "," + data_o + "," + ora_o + "," + categoria_o;
+        
+        String nome = NEvento.getText();
+        String descrizione = "$#=" + Descriz.getText() + "$#=";
+        String data = (String) gg.getSelectedItem() + "-" + (String) mm.getSelectedItem() + "-" + (String) yy.getSelectedItem();
+        String ora = (String) jComboBox1.getSelectedItem() + ":" + (String) jComboBox2.getSelectedItem();
+        String categoria = (String) cat.getSelectedItem();    
+        if (jToggleButton1.isSelected()) {
+            Integer orario = Integer.parseInt((String) jComboBox1.getSelectedItem());
+            orario += 12;
+            String orax[] = ora.split(":");
+            ora = String.valueOf(orario) + ":" + orax[1];
+        }
+
+        String evento = nome + "," + descrizione + "," + data + "," + ora + "," + categoria + "\n";
+        
+        String dati = evento_vecchio + "#@##@-@" + evento;
+        boolean success = AuthClient.inviaDati("MODIFY", username, dati);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Evento modificato!");
+            setVisible(false);
+            mainframe.update();
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Modifica fallita.");
+        }
+        return false;
+        
+    }
+    
+    private boolean saveEvent() throws IOException { 
         String nome = NEvento.getText();
         String descrizione = "$#=" + Descriz.getText() + "$#=";
         String data = (String) gg.getSelectedItem() + "-" + (String) mm.getSelectedItem() + "-" + (String) yy.getSelectedItem();
@@ -393,10 +493,12 @@ public class EventFrame extends javax.swing.JFrame {
         boolean success = AuthClient.inviaDati("EVENTO", username, evento);
         if (success) {
             JOptionPane.showMessageDialog(this, "Evento creato!");
+            mainframe.update();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Si e verificato un errore, riprova!");
         }
+        return success;
     }
     
     public int i = 1;
@@ -453,9 +555,11 @@ public class EventFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             private String username;
+            private GestionaleFrame mainframe;
+            private boolean edit;
             public void run() {
                 try {
-                    new EventFrame(this.username).setVisible(true);
+                    new EventFrame(this.username, mainframe, edit).setVisible(true);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(EventFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -493,7 +597,7 @@ public class EventFrame extends javax.swing.JFrame {
         
     }
     private void loadCategorie(JComboBox c, String username) throws FileNotFoundException, IOException {
-        Vector<String> catout = AuthClient.richiediDati("RICHIEDI", username, "Categorie");
+        Vector<String> catout = AuthClient.richiediDati(username, "Categorie");
 //        Vector<String> cat = null;
         for (String s : catout) {
             String[] f = s.split(":\\$#:");

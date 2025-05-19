@@ -49,7 +49,7 @@ public class AuthClient {
         }
     }
     
-    public static Vector<String> richiediDati(String tipo, String username, String tipo2) {
+    public static Vector<String> richiediDati(String username, String tipo2) {
         Vector<String> dati = new Vector<String>();
 
         try (
@@ -57,7 +57,7 @@ public class AuthClient {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            out.println(tipo + ":#$%#**&^$:" + username + ":#$%#**&^$:" + tipo2);
+            out.println("RICHIEDI" + ":#$%#**&^$:" + username + ":#$%#**&^$:" + tipo2);
 
             String line = in.readLine();
             if (line == null || line.equals("FALLITO!")) {

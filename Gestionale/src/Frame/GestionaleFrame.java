@@ -3,10 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Frame;
-
 import Class.UIUtils;
+import Frame.CategoriaFrame;
+import Frame.CategoriaFrame;
+import Frame.EventFrame;
+import Frame.EventFrame;
+import Frame.Login.AuthClient;
 import Frame.Login.AuthClient;
 import Frame.Login.loginFrame;
+import Frame.Login.loginFrame;
+import Frame.Panel;
+import Frame.Panel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -73,7 +80,12 @@ public class GestionaleFrame extends javax.swing.JFrame {
         contenitore.removeAll();
         this.nomeutente = nomeutente;
         contenitore.setBackground(Color.decode("#FDFFFC"));
+        update();
         
+    }
+    
+    public String getUsername() {
+        return nomeutente;
     }
     
     /**
@@ -85,19 +97,12 @@ public class GestionaleFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
         scroll = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         add = new javax.swing.JComboBox<>();
-        bot = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
-
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Gestisci");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestionale");
@@ -125,14 +130,6 @@ public class GestionaleFrame extends javax.swing.JFrame {
             }
         });
 
-        bot.setBackground(new java.awt.Color(34, 34, 34));
-        bot.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bot.setForeground(new java.awt.Color(255, 255, 255));
-        bot.setText("Gestisci");
-        bot.setMaximumSize(new java.awt.Dimension(77, 26));
-        bot.setMinimumSize(new java.awt.Dimension(77, 26));
-        bot.setPreferredSize(new java.awt.Dimension(77, 26));
-
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/agg.png"))); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -151,7 +148,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         logout.setForeground(new java.awt.Color(253, 255, 252));
-        logout.setText("Logout");
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Frame/logout.png"))); // NOI18N
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutActionPerformed(evt);
@@ -165,15 +162,13 @@ public class GestionaleFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 349, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(logout)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,8 +177,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(logout)
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(36, 36, 36))
@@ -221,9 +215,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         contenitore.removeAll();
-        addPanel();
-        
-        
+        update();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -239,7 +231,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
    
     
     private boolean checkFile() throws FileNotFoundException {
-        Vector<String> catout = AuthClient.richiediDati("RICHIEDI", nomeutente, "Categorie");
+        Vector<String> catout = AuthClient.richiediDati(nomeutente, "Categorie");
         if (catout == null || catout.isEmpty()) {
             return false;
         }
@@ -258,7 +250,7 @@ public class GestionaleFrame extends javax.swing.JFrame {
                     if (add.getSelectedIndex() == 1 && checkFile()) {
                         EventFrame ef;
                         try {
-                            ef = new EventFrame(nomeutente);
+                            ef = new EventFrame(nomeutente, GestionaleFrame.this, false);
                             ef.setVisible(true);
                         } catch (FileNotFoundException ex) {
                             System.err.println("Errore in openTab()!");
@@ -347,73 +339,72 @@ public class GestionaleFrame extends javax.swing.JFrame {
         
     }
     
-    public void addPanel() {
-        String path1 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Categorie.csv";
-        String path2 = System.getProperty("user.home") + File.separator + "Gestionale" + File.separator + "Eventi.csv";
-        File file = new File(path2);
-        File file2 = new File(path1);
-        
-        try (Scanner scanner = new Scanner(file)) {
-            
-            while (scanner.hasNextLine()) {
-                
-                String stringa = scanner.nextLine();
-                 
-
-                if(!stringa.equals("")){
-                    
-                    
-                    String splitted[] = stringa.split("\\$#=");
-                    String stringa2 = splitted[0] + "@#$@#" + splitted[2];
-                    String splitted2[] = stringa2.split(",");
-
-
-                    String nome = splitted2[0];
-                    String descrizione = splitted[1];
-                    String data = splitted2[2];
-                    String orario = splitted2[3];
-                    String categoria = splitted2[4];
-
-                    String colore = "#000000";
-                    
-                    try (Scanner scan = new Scanner(file2)) {
-                        
-                        while (scan.hasNextLine()) {
-                            String linea = scan.nextLine();
-                            String sp[] = linea.split(",");
-                            System.out.println("Categoria: " + sp[0]);
-                            System.out.println("Colore: " + sp[1]);
-
-                            if (categoria.trim().equalsIgnoreCase(sp[0].trim())) {
-                                colore = sp[1].trim();
-                            }
-                        }
- 
-                        
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    contenitore.add(Box.createRigidArea(new Dimension(0, 10)));
-                    contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore, contenitore)) ;
-                    
-                    System.out.println(stringa);
-                                       
-                }else{
-                    
-                    break;
-                    
-                }
-            }            
-  
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void update() {
+        contenitore.removeAll();
+        Vector<String> categorie = AuthClient.richiediDati(nomeutente, "Categorie");
+        for (String s : categorie) {
+            System.out.println("[Cat] " + s);
         }
-        contenitore.revalidate();
-        contenitore.repaint();
+        Vector<String> eventi = AuthClient.richiediDati(nomeutente, "Eventi");
+        for (String e : eventi) {
+            System.out.println("[Evt] " + e );
+        }
+        addPanel(categorie, eventi);
     }
+    
+    public void addPanel(Vector<String> categorie, Vector<String> eventi) {
+        
+        //file -> Eventi
+        //file2 -> Categorie
+        
 
+        for (String stringa : eventi) {
+
+
+            if(!stringa.equals("")){
+
+//                System.err.println("NON E VUOTA!");
+
+                String splitted[] = stringa.split("\\$#=");
+                String stringa2 = splitted[0] + "@#$@#" + splitted[2];
+                String splitted2[] = stringa2.split(",");
+
+
+                String nome = splitted2[0];
+                String descrizione = splitted[1];
+                String data = splitted2[2];
+                String orario = splitted2[3];
+                String categoria = splitted2[4];
+
+                String colore = "#000000";
+
+                for (String linea : categorie) {
+                    String sp[] = linea.split(":\\$#:");
+                    System.out.println("Categoria: " + sp[0]);
+                    System.out.println("Colore: " + sp[1]);
+
+                    if (categoria.trim().equalsIgnoreCase(sp[0].trim())) {
+                        colore = sp[1].trim();
+                    }
+                }
+
+                contenitore.add(Box.createRigidArea(new Dimension(0, 10)));
+                contenitore.add(new Panel(nome,descrizione,data,orario,categoria,colore, contenitore, GestionaleFrame.this));
+
+                System.out.println(stringa);
+
+            }else{
+
+                break;
+
+            }
+            contenitore.revalidate();
+            contenitore.repaint();
+        }   
+    }
+        
+
+    
     public static void main(String args[]) {
         
         try {
@@ -426,12 +417,10 @@ public class GestionaleFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> add;
-    private javax.swing.JButton bot;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton logout;
     private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
-}
+} 
